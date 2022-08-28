@@ -29,6 +29,8 @@ public class CreatorApplicationTests {
     @Test
     public void test1(){
         vueProjectService.createRouter();
+        vueProjectService.createMainJs();
+        vueProjectService.createIndexHtml();
     }
 
 }
