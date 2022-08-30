@@ -1,6 +1,10 @@
 package com.wwg.vue.creator.service.impl;
 
+import com.wwg.vue.creator.common.utils.folder;
+import com.wwg.vue.creator.mbg.mapper.SysMenuMapper;
 import com.wwg.vue.creator.mbg.mapper.SysVueResourceMapper;
+import com.wwg.vue.creator.mbg.model.SysMenu;
+import com.wwg.vue.creator.mbg.model.SysMenuExample;
 import com.wwg.vue.creator.mbg.model.SysVueResource;
 import com.wwg.vue.creator.mbg.model.SysVueResourceExample;
 import com.wwg.vue.creator.service.VueProjectService;
@@ -26,10 +30,11 @@ import java.util.Map;
 @Service
 public class VueProjectServiceImpl implements VueProjectService {
     @Autowired
-    private SysVueResourceMapper sysVueResourceMapper;
+    private SysMenuMapper sysMenuMapper;
 
     @Override
     public void createRouter(){
+        folder.checkFolder(System.getProperty("user.dir")+"\\output");
         Configuration configuration = new Configuration(new Version("2.3.3"));
         configuration.setDefaultEncoding("utf-8");
         String absolutePath = System.getProperty("user.dir") + "\\src\\main\\resources\\templates\\js";
@@ -41,9 +46,9 @@ public class VueProjectServiceImpl implements VueProjectService {
             Map<String,Object> params = new HashMap<>();
             Date dNow = new Date( );
             SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
-            SysVueResourceExample example=new SysVueResourceExample();
-            SysVueResourceExample.Criteria criteria=example.createCriteria();
-            List<SysVueResource> list =sysVueResourceMapper.selectByExample(example);
+            SysMenuExample example=new SysMenuExample();
+            SysMenuExample.Criteria criteria=example.createCriteria();
+            List<SysMenu> list =sysMenuMapper.selectByExample(example);
             params.put("list",list);
             params.put("mapper","dao");
             params.put("author",list.get(1).getName());
@@ -67,6 +72,7 @@ public class VueProjectServiceImpl implements VueProjectService {
 
     @Override
     public void createMainJs(){
+        folder.checkFolder(System.getProperty("user.dir")+"\\output");
         Configuration configuration = new Configuration(new Version("2.3.3"));
         configuration.setDefaultEncoding("utf-8");
         String absolutePath = System.getProperty("user.dir") + "\\src\\main\\resources\\templates\\js";
@@ -100,6 +106,7 @@ public class VueProjectServiceImpl implements VueProjectService {
 
     @Override
     public void createIndexHtml(){
+        folder.checkFolder(System.getProperty("user.dir")+"\\output");
         Model model=new ConcurrentModel();
         model.addAttribute("users", "wwg");
 
